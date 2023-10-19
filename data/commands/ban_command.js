@@ -5,13 +5,9 @@ module.exports.run = (Bot, msg, args) => {
 
     const runningBan = Bot.runningCommand.get(`ban`);
     const runningUnban = Bot.runningCommand.get(`unban`);
-    if(runningBan){
-        return msg.channel.send(`A ban is already in progress, please wait until it overs!`);
-    }else if(runningUnban){
-        return msg.channel.send(`An unban is already in progress, please wait until it overs!`);
-    }else{
-        Bot.runningCommand.set(`ban`,true);
-    }
+            if(runningBan || runningUnban) return msg.channel.send(`A${runningBan ? ' ban' : 'n unban' } is already in progress, please wait until it overs!`); 
+            else Bot.runningCommand.set(`ban`,true);
+    
     let id, name, user;
     if(args[0]){
         user = Bot.users.cache.get(args[0]) || msg.mentions.users.first() || await Bot.users.fetch(args[0]);
